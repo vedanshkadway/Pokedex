@@ -1,12 +1,12 @@
 .pokemonClass{
-    flex-basis: 20%;
+    flex-basis: 19%;
     height: 400px;
-    width : 300px;
+    width : 280px;
     display: flex;
     align-items: center;
     flex-direction: column;
-   letter-spacing: 0.1rem;
-   gap: 20px; 
+    letter-spacing: 0.1rem;
+    gap: 20px; 
     
   background-color: #385170;
   border-radius: 10px;
@@ -21,6 +21,6 @@
 }
 .pokemon-image{
     height: 200px;
-    width: auto;
+    /* width: a; */
     max-height: 100%;
 }

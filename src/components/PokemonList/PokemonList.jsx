@@ -5,9 +5,16 @@ import Pokemon from "../Pokemon/Pokemon";
 function PokemonList() {
   const [pokemonList, setPokemonList] = useState([]);
   const [isLoading, SetIsloading] = useState(true);
+  const [pokedexURL,setPokedexURL] = useState("https://pokeapi.co/api/v2/pokemon");
+  const [nextURL ,setNextURL] = useState('');
+  const [prevURL,setPrevURL] = useState('');
 
   async function downloadPokemon() {
-    const response = await axios.get("https://pokeapi.co/api/v2/pokemon"); //this downloads list of 20 pokemon
+    const response = await axios.get(pokedexURL); //this downloads list of 20 pokemon
+    SetIsloading(true);
+    console.log(response);
+    setPrevURL(response.data.previous);
+    setNextURL(response.data.next);
     const pokemonResult = response.data.results; // we get the array of pokemon from resul
     
     const pokemonResultPromise = pokemonResult.map((pokemon) => //array of promises store hoga pokemonResultPromise me
@@ -39,20 +46,20 @@ function PokemonList() {
   //but async bnana h to alag se function bna ke isme call krdo.
   useEffect(() => {
     downloadPokemon();
-  }, []);
+  }, [pokedexURL]);
 
   return (
     <div className="pokemon-list-wrapper">
-      <div>Pokemon List</div>
+      
       <div className="pokemon-wrapper">
 
-      {isLoading ? "Loading..." : 
+      {(isLoading) ? "Loading..." : 
       pokemonList.map((p)=><Pokemon name = {p.name} image = {p.image} key = {p.id} />)
     }
         </div>
         <div className="controls">
-            <button>Prev</button>
-            <button>Next</button>
+            <button disabled ={prevURL==null} onClick={()=> setPokedexURL(prevURL)}>Prev</button>
+            <button disabled ={nextURL==null} onClick={()=> setPokedexURL(nextURL)}>Next</button>
         </div>
     </div>
   );
